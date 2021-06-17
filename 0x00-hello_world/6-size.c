@@ -10,10 +10,10 @@ int intType;
 long int longIntType;
 long long int longLongIntType;
 float floatType;
-printf("size of char: %zu byte\n", sizeof(charType));
-printf("size of int: %zu byte\n", sizeof(intType));
-printf("size of long int: %zu byte\n", sizeof(longIntType));
-printf("size of long long int: %zu byte\n", sizeof(longLongIntType));
-printf("size of float: %zu byte\n", sizeof(floatType));
+printf("size of char: %lu byte\n", (unsigned long)sizeof(charType));
+printf("size of int: %lu byte\n", (unsigned long)sizeof(intType));
+printf("size of long int: %lu byte\n", (unsigned long)sizeof(longIntType));
+printf("size of long long int: %lu byte\n", (unsigned long)sizeof(longLongIntType));
+printf("size of float: %lu byte\n", (unsigned long)sizeof(floatType));
 return (0);
 }
