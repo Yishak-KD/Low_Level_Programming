@@ -1,16 +1,30 @@
 #include "holberton.h"
+
 /**
-* _strcat - concatenates two strings.
-* @dest: the pointer to the destination array.
-* @src: the string to be copied.
-* Return: success.
-*/
-
+ * _strcat - concatenates two strings
+ * @dest: string to append to
+ * @src: string to add
+ *
+ * Return: a pointer to the resulting string
+ */
 char *_strcat(char *dest, char *src)
-	{
-	char dest[20];
-	char src[20];
+{
+	int i, j;
 
-	_putchar("%s\n", strcat(dest, src));
-	return (0);
+	i = 0;
+	j = 0;
+
+	while (dest[i] != '\0')
+		i++;
+
+	while (src[j] != '\0')
+	{
+		dest[i] = src[j];
+		j++;
+		i++;
 	}
+
+	dest[i] = '\0';
+
+	return (dest);
+}
