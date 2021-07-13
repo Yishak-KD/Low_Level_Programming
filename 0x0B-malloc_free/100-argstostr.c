@@ -2,44 +2,75 @@
 #include <stdlib.h>
 
 /**
- * argstostr - Concatenates all arguments of the program into a string;
- *             arguments are separated by a new line in the string.
- * @ac: The number of arguments passed to the program.
- * @av: An array of pointers to the arguments.
+ * wrdcnt - counts the number of words in a string
+ * @s: string to count
  *
- * Return: If ac == 0, av == NULL, or the function fails - NULL.
- *         Otherwise - a pointer to the new string.
+ * Return: int of number of words
  */
-char *argstostr(int ac, char **av)
+int wrdcnt(char *s)
 {
-	char *str;
-	int arg, byte, index, size = ac;
+	int i, n = 0;
 
-	if (ac == 0 || av == NULL)
-		return (NULL);
-
-	for (arg = 0; arg < ac; arg++)
+	for (i = 0; s[i]; i++)
 	{
-		for (byte = 0; av[arg][byte]; byte++)
-			size++;
+		if (s[i] == ' ')
+		{
+			if (s[i + 1] != ' ' && s[i + 1] != '\0')
+				n++;
+		}
+		else if (i == 0)
+			n++;
 	}
+	n++;
+	return (n);
+}
 
-	str = malloc(sizeof(char) * size + 1);
+/**
+ * strtow - splits a string into words
+ * @str: string to split
+ *
+ * Return: pointer to an array of strings
+ */
+char **strtow(char *str)
+{
+	int i, j, k, l, n = 0, wc = 0;
+	char **w;
 
-	if (str == NULL)
+	if (str == NULL || *str == '\0')
 		return (NULL);
-
-	index = 0;
-
-	for (arg = 0; arg < ac; arg++)
+	n = wrdcnt(str);
+	if (n == 1)
+		return (NULL);
+	w = (char **)malloc(n * sizeof(char *));
+	if (w == NULL)
+		return (NULL);
+	w[n - 1] = NULL;
+	i = 0;
+	while (str[i])
 	{
-		for (byte = 0; av[arg][byte]; byte++)
-			str[index++] = av[arg][byte];
-
-		str[index++] = '\n';
+		if (str[i] != ' ' && (i == 0 || str[i - 1] == ' '))
+		{
+			for (j = 1; str[i + j] != ' ' && str[i + j]; j++)
+				;
+			j++;
+			w[wc] = (char *)malloc(j * sizeof(char));
+			j--;
+			if (w[wc] == NULL)
+			{
+				for (k = 0; k < wc; k++)
+					free(w[k]);
+				free(w[n - 1]);
+				free(w);
+				return (NULL);
+			}
+			for (l = 0; l < j; l++)
+				w[wc][l] = str[i + l];
+			w[wc][l] = '\0';
+			wc++;
+			i += j;
+		}
+		else
+			i++;
 	}
-
-	str[size] = '\0';
-
-	return (str);
+	return (w);
 }
