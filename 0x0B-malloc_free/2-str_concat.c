@@ -1,66 +1,49 @@
+#include <stdlib.h>
 #include "holberton.h"
-#include "stdlib.h"
-/**
- *str_concat-concanates 2 strings.
- *@s1:First string.
- *@s2:second string.
- *Return: Pointer to memory containing concatenated string.
- */
 
+/**
+ * *str_concat - concatenates two strings
+ * @s1: string to concatenate
+ * @s2: other string to concatenate
+ *
+ * Return: pointer to the new string created (Success), or NULL (Error)
+ */
 char *str_concat(char *s1, char *s2)
 {
-	int size, j, k, size2;
-	char *memstorage;
+	char *s3;
+	unsigned int i = 0, j = 0, len1 = 0, len2 = 0;
 
-	size = _strlen(s1);
-	size2 = _strlen(s2);
-	if (s1 == NULL)
-	{
-		s1 = "";
-	}
-	if (s1 == NULL)
-	{
-		s2 = "";
-	}
+	while (s1 && s1[len1])
+		len1++;
+	while (s2 && s2[len2])
+		len2++;
 
-/*allocate memory for the full string.*/
-	memstorage = malloc(size + size2);
-	if (memstorage == NULL)
-	{
+	s3 = malloc(sizeof(char) * (len1 + len2 + 1));
+	if (s3 == NULL)
 		return (NULL);
-	}
 
-/*copy string one into memory.*/
-	for (j = 0; j < size; j++)
+	i = 0;
+	j = 0;
+
+	if (s1)
 	{
-		memstorage[j] = s1[j];
+		while (i < len1)
+		{
+			s3[i] = s1[i];
+			i++;
+		}
 	}
-/*copy string two into memory.*/
-	for (k = 0; k < size2; k++)
+
+	if (s2)
 	{
-		memstorage[j] = s2[k];
-		j++;
+		while (i < (len1 + len2))
+		{
+			s3[i] = s2[j];
+			i++;
+			j++;
+		}
 	}
-/*Put null character at the end of the string.*/
-	memstorage[++j] = '\0';
-	return (memstorage);
-}
+	s3[i] = '\0';
 
-
-/**
- *_strlen-Finds the length of a string.
- *@s:String pointer to the string whose length is to be found.
- *
- *Return: returns the length of the string.
- */
-
-int _strlen(char *s)
-{
-	int p = 0;
-/*incremeant up to when the last character is NULL,\0*/
-	while (*(s + p) != 0)
-	{
-		p++;
-	}
-	return (p);
+	return (s3);
 }
