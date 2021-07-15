@@ -2,43 +2,44 @@
 #include <stdlib.h>
 
 /**
- * string_nconcat - Concatenates two strings using at
- *                  most an inputted number of bytes.
- * @s1: The first string.
- * @s2: The second string.
- * @n: The maximum number of bytes of s2 to concatenate to s1.
+ *_calloc-allocate memory to an array using malloc.
+ *@nmemb:Total array members.
+ *@size:size of each array member.
  *
- * Return: If the function fails - NULL.
- *         Otherwise - a pointer to the concatenated space in memory.
+ *Return:Pointer to allocated memory.
  */
-char *string_nconcat(char *s1, char *s2, unsigned int n)
+
+void *_calloc(unsigned int nmemb, unsigned int size)
 {
-	char *concat;
-	unsigned int len = n, index;
+	void *ptr;
 
-	if (s1 == NULL)
-		s1 = "";
-
-	if (s2 == NULL)
-		s2 = "";
-
-	for (index = 0; s1[index]; index++)
-		len++;
-
-	concat = malloc(sizeof(char) * (len + 1));
-
-	if (concat == NULL)
+	if (nmemb == 0 || size == 0)
 		return (NULL);
 
-	len = 0;
+	ptr = malloc(nmemb * size);
+	if (ptr == NULL)
+		return (NULL);
+	_memset(ptr, 0, nmemb * size);
+	return (ptr);
+}
+/**
+ * _memset - function that fills memory with a constant byte.
+ *
+ * @s: memory area to return
+ * @b: constant byte
+ * @n: size of bytes
+ * Return: pointer to memory area.
+ */
 
-	for (index = 0; s1[index]; index++)
-		concat[len++] = s1[index];
+char *_memset(char *s, char b, unsigned int n)
+{
+	unsigned int i = 0;
 
-	for (index = 0; s2[index] && index < n; index++)
-		concat[len++] = s2[index];
+	while (i < n)
+	{
 
-	concat[len] = '\0';
-
-	return (concat);
+		*(s + i) = b;
+		i += 1;
+	}
+	return (s);
 }
