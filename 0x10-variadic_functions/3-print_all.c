@@ -1,43 +1,97 @@
 #include "variadic_functions.h"
+#include <stdarg.h>
+#include <stdio.h>
+/**
+ *print_char- prints char
+ *@ap:argument to the function
+ */
+void print_char(va_list ap)
+{
+	char l;
+
+	l = va_arg(ap, int);
+	printf("%c", l);
+}
 
 /**
- * print_all - prints all the legal formats passed
- *
- * @format: character string with formats
- * Return: nothing
+ *print_float- prints float
+ *@ap: arg to the function
  */
-void print_all(const char * const format, ...)
+void print_float(va_list ap)
 {
-	va_list args;
-	unsigned int i = 0;
+	float f;
+
+	f = va_arg(ap, int);
+	printf("%f", f);
+}
+/**
+ *print_int- prints integer
+ *@ap: argument to the function
+ */
+void print_int(va_list ap)
+{
+	int num;
+
+	num = va_arg(ap, int);
+
+	printf("%d", num);
+}
+/**
+ *print_string- prints string
+ *@ap: argument to the function
+ */
+void print_string(va_list ap)
+{
 	char *str;
 
-	va_start(args, format);
+	str = va_arg(ap, char *);
+	printf("%s", str);
+}
+/**
+ *print_all-prints all type
+ *@format: is a list of types of arguments
+ *              passed to the function
+ */
+
+void print_all(const char * const format, ...)
+{
+	va_list aps;
+
+	int i, j;
+
+	char *separator = "";
+	printer_f func[] = {
+		{"c", print_char},
+		{"i", print_int},
+		{"f", print_float},
+		{"s", print_string},
+		{NULL, NULL}
+	};
+
+	va_start(aps, format);
+	i = 0;
+
 	while (format && format[i])
 	{
-		switch (format[i++])
+		j = 0;
+
+		if (format[i] == '\0')
+			continue;
+
+		while (func[j].symbol != NULL)
 		{
-			case 'c':
-				printf("%c", va_arg(args, int));
+			if (*(func[j].symbol) == format[i])
+			{
+				printf("%s", separator);
+				func[j].func(aps);
+				separator = ", ";
 				break;
-			case 'i':
-				printf("%d", va_arg(args, int));
-				break;
-			case 'f':
-				printf("%f", (float)va_arg(args, double));
-				break;
-			case 's':
-				str = va_arg(args, char *);
-				if (str == NULL)
-					str = "(nil)";
-				printf("%s", str);
-				break;
-			default:
-				continue;
+
+			}
+			j++;
 		}
-		if (format[i])
-			printf(", ");
+		i++;
 	}
+	va_end(aps);
 	printf("\n");
-	va_end(args);
 }
