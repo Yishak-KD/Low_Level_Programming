@@ -1,22 +1,22 @@
 #include "holberton.h"
+
 /**
- *flip_bits-counts how many bits need to be flipped in n to be m
- *@n: the original number
- *@m: the number n would flip into
- *Return: the number of bits that would need to be flipped for n to became m
+ * flip_bits - Counts the number of bits needed to be
+ *             flipped to get from one number to another.
+ * @n: The number.
+ * @m: The number to flip n to.
+ *
+ * Return: The necessary number of bits to flip to get from n to m.
  */
 unsigned int flip_bits(unsigned long int n, unsigned long int m)
 {
-	unsigned long int result;
-	unsigned int count;
+	unsigned long int xor = n ^ m, bits = 0;
 
-	count = 0;
-	result = n ^ m;
-	while (result != 0)
+	while (xor > 0)
 	{
-		if ((result & 1) == 1)
-			count++;
-		result = result >> 1;
+		bits += (xor & 1);
+		xor >>= 1;
 	}
-	return (count);
+
+	return (bits);
 }
