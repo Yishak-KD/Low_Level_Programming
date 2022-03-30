@@ -1,1 +1,1 @@
-Searching algorithms using C programming
+Searching algorithms by using C programming
