@@ -6,7 +6,8 @@
   * @size: The number of elements in the array.
   * @value: The value to search for
   *
-  * Return: the first index where value is located or if array is NULL , function must return -1.
+  * Return: the first index where value is locate
+  * d or if array is NULL , function must return -1.
   *
   */
 int linear_search(int *array, size_t size, int value)
