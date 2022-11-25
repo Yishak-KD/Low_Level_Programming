@@ -1,25 +1,36 @@
 #include "search_algos.h"
 
 /**
-  * @array: is a pointer to the first element of the array to search in
-  * @size: is the number of elements in array
-  * @value: the value to search for
+  * binary_search - search for a value in a sorted array of integers
+  * @array: a pointer to the first element of the array.
+  * @size: a number of elements in array.
+  * @value: value to search for.
   *
-  * Return:array will return -1 if it is NULL
-  *
+  * Return: If value is not present in array or if array is NULL,
+  * function must return -1,
+  * otherwise the function must return the first index where value is located.
   */
-int linear_search(int *array, size_t size, int value)
+int binary_search(int *array, size_t size, int value)
 {
-	size_t m;
+	size_t i, left, right;
 
 	if (array == NULL)
 		return (-1);
 
-	for (m = 0; m < size; m++)
+	for (left = 0, right = size - 1; right >= left;)
 	{
-		printf("Value checked array[%ld] = [%d]\n", i, array[m]);
-		if (array[m] == value)
-			return (m);
+		printf("Searching in array: ");
+		for (i = left; i < right; i++)
+			printf("%d, ", array[i]);
+		printf("%d\n", array[i]);
+
+		i = left + (right - left) / 2;
+		if (array[i] == value)
+			return (i);
+		if (array[i] > value)
+			right = i - 1;
+		else
+			left = i + 1;
 	}
 
 	return (-1);
